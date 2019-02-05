@@ -1,6 +1,7 @@
 require("../_support/utils/ServicesUtil");
 const { Timeouts } = require("../_support/constants");
-
+// creates an app with ucr config and command
+// creates an app with persistent volume
 describe("Services", function() {
   /**
    * Test the applications
@@ -64,15 +65,18 @@ describe("Services", function() {
         .click({ timeout: Timeouts.ANIMATION_TIMEOUT });
 
       // Wait for the table and the service to appear
-      cy.get(".page-body-content table", {
+      cy.get(".page-body-content .service-table", {
         timeout: Timeouts.SERVICE_DEPLOYMENT_TIMEOUT
       })
         .contains(serviceName, { timeout: Timeouts.SERVICE_DEPLOYMENT_TIMEOUT })
         .should("exist");
 
       // Now click on the name
-      cy.get(".page-body-content table")
-        .getTableRowThatContains(serviceName)
+      cy.get(
+        ".BottomLeftGrid_ScrollWrapper .ReactVirtualized__Grid__innerScrollContainer"
+      )
+        .children()
+        .contains(serviceName)
         .get("a.table-cell-link-primary")
         .contains(serviceName)
         .click();
@@ -200,7 +204,7 @@ describe("Services", function() {
         .click({ timeout: Timeouts.ANIMATION_TIMEOUT });
 
       // Wait for the table and the service to appear
-      cy.get(".page-body-content table", {
+      cy.get(".page-body-content .service-table", {
         timeout: Timeouts.SERVICE_DEPLOYMENT_TIMEOUT
       })
         .contains(serviceName, {
@@ -209,8 +213,11 @@ describe("Services", function() {
         .should("exist");
 
       // Now click on the name
-      cy.get(".page-body-content table")
-        .getTableRowThatContains(serviceName)
+      cy.get(
+        ".BottomLeftGrid_ScrollWrapper .ReactVirtualized__Grid__innerScrollContainer"
+      )
+        .children()
+        .contains(serviceName)
         .get("a.table-cell-link-primary")
         .contains(serviceName)
         .click();
@@ -309,20 +316,25 @@ describe("Services", function() {
         .click({ timeout: Timeouts.ANIMATION_TIMEOUT });
 
       // Wait for the table and the service to appear
-      cy.get(".page-body-content table")
+      cy.get(".page-body-content .service-table")
         .contains(serviceName, { timeout: Timeouts.SERVICE_DEPLOYMENT_TIMEOUT })
         .should("exist")
         .as("serviceName");
 
-      cy.get("@serviceName")
-        .parents("tr")
-        .first()
+      cy.get(
+        ".BottomLeftGrid_ScrollWrapper .ReactVirtualized__Grid__innerScrollContainer"
+      )
+        .children()
+        .contains(serviceName)
         .contains("Running", { timeout: Timeouts.SERVICE_DEPLOYMENT_TIMEOUT })
         .should("exist");
 
       // Now click on the name
-      cy.get(".page-body-content table")
-        .getTableRowThatContains(serviceName)
+      cy.get(
+        ".BottomLeftGrid_ScrollWrapper .ReactVirtualized__Grid__innerScrollContainer"
+      )
+        .children()
+        .contains(serviceName)
         .get("a.table-cell-link-primary")
         .contains(serviceName)
         .click();
@@ -437,19 +449,31 @@ describe("Services", function() {
         .click({ timeout: Timeouts.ANIMATION_TIMEOUT });
 
       // Wait for the table and the service to appear
-      cy.get(".page-body-content table")
+      cy.get(".page-body-content .service-table")
         .contains(serviceName, { timeout: Timeouts.SERVICE_DEPLOYMENT_TIMEOUT })
         .should("exist");
 
       // Get the table row and wait until it's Running
-      cy.get(".page-body-content table")
-        .getTableRowThatContains(serviceName)
+      cy.get(".filter-input-text").type(serviceName);
+      cy.get(".form-control-group-add-on")
+        .eq(-1)
+        .click(); // close filter window
+      cy.get(".ReactVirtualized__Grid")
+        .eq(-1) // bottom right grid
         .contains("Running", { timeout: Timeouts.SERVICE_DEPLOYMENT_TIMEOUT })
         .should("exist");
+      cy.get(".filter-input-text").clear();
+      cy.get(".form-control-group-add-on")
+      .eq(-1)
+      .click(); // close filter window
 
       // Now click on the name
-      cy.get(".page-body-content table")
-        .getTableRowThatContains(serviceName)
+      cy.get(".page-body-content .service-table");
+      cy.get(
+        ".BottomLeftGrid_ScrollWrapper .ReactVirtualized__Grid__innerScrollContainer"
+      )
+        .children()
+        .contains(serviceName)
         .get("a.table-cell-link-primary")
         .contains(serviceName)
         .click();
@@ -577,19 +601,30 @@ describe("Services", function() {
         .click({ timeout: Timeouts.ANIMATION_TIMEOUT });
 
       // Wait for the table and the service to appear
-      cy.get(".page-body-content table")
+      cy.get(".page-body-content .service-table")
         .contains(serviceName, { timeout: Timeouts.SERVICE_DEPLOYMENT_TIMEOUT })
         .should("exist");
 
       // Get the table row and wait until it's Running
-      cy.get(".page-body-content table")
-        .getTableRowThatContains(serviceName)
+      cy.get(".filter-input-text").type(serviceName);
+      cy.get(".form-control-group-add-on")
+        .eq(-1)
+        .click(); // close filter window
+      cy.get(".ReactVirtualized__Grid")
+        .eq(-1) // bottom right grid
         .contains("Running", { timeout: Timeouts.SERVICE_DEPLOYMENT_TIMEOUT })
         .should("exist");
+      cy.get(".filter-input-text").clear();
+      cy.get(".form-control-group-add-on")
+      .eq(-1)
+      .click(); // close filter window
 
       // Now click on the name
-      cy.get(".page-body-content table")
-        .getTableRowThatContains(serviceName)
+      cy.get(
+        ".BottomLeftGrid_ScrollWrapper .ReactVirtualized__Grid__innerScrollContainer"
+      )
+        .children()
+        .contains(serviceName)
         .get("a.table-cell-link-primary")
         .contains(serviceName)
         .click();
@@ -706,19 +741,30 @@ describe("Services", function() {
         .click({ timeout: Timeouts.ANIMATION_TIMEOUT });
 
       // Wait for the table and the service to appear
-      cy.get(".page-body-content table")
+      cy.get(".page-body-content .service-table")
         .contains(serviceName, { timeout: Timeouts.SERVICE_DEPLOYMENT_TIMEOUT })
         .should("exist");
 
       // Get the table row and wait until it's Running
-      cy.get(".page-body-content table")
-        .getTableRowThatContains(serviceName)
+      cy.get(".filter-input-text").type(serviceName);
+      cy.get(".form-control-group-add-on")
+        .eq(-1)
+        .click(); // close filter window
+      cy.get(".ReactVirtualized__Grid")
+        .eq(-1) // bottom right grid
         .contains("Running", { timeout: Timeouts.SERVICE_DEPLOYMENT_TIMEOUT })
         .should("exist");
+      cy.get(".filter-input-text").clear();
+      cy.get(".form-control-group-add-on")
+      .eq(-1)
+      .click(); // close filter window
 
       // Now click on the name
-      cy.get(".page-body-content table")
-        .getTableRowThatContains(serviceName)
+      cy.get(
+        ".BottomLeftGrid_ScrollWrapper .ReactVirtualized__Grid__innerScrollContainer"
+      )
+        .children()
+        .contains(serviceName)
         .get("a.table-cell-link-primary")
         .contains(serviceName)
         .click();
@@ -830,19 +876,30 @@ describe("Services", function() {
         .click({ timeout: Timeouts.ANIMATION_TIMEOUT });
 
       // Wait for the table and the service to appear
-      cy.get(".page-body-content table")
+      cy.get(".page-body-content .service-table")
         .contains(serviceName, { timeout: Timeouts.SERVICE_DEPLOYMENT_TIMEOUT })
         .should("exist");
 
       // Get the table row and wait until it's Running
-      cy.get(".page-body-content table")
-        .getTableRowThatContains(serviceName)
+      cy.get(".filter-input-text").type(serviceName);
+      cy.get(".form-control-group-add-on")
+        .eq(-1)
+        .click(); // close filter window
+      cy.get(".ReactVirtualized__Grid")
+        .eq(-1) // bottom right grid
         .contains("Running", { timeout: Timeouts.SERVICE_DEPLOYMENT_TIMEOUT })
         .should("exist");
+      cy.get(".filter-input-text").clear();
+      cy.get(".form-control-group-add-on")
+      .eq(-1)
+      .click(); // close filter window
 
       // Now click on the name
-      cy.get(".page-body-content table")
-        .getTableRowThatContains(serviceName)
+      cy.get(
+        ".BottomLeftGrid_ScrollWrapper .ReactVirtualized__Grid__innerScrollContainer"
+      )
+        .children()
+        .contains(serviceName)
         .get("a.table-cell-link-primary")
         .contains(serviceName)
         .click();
@@ -956,20 +1013,30 @@ describe("Services", function() {
         .click({ timeout: Timeouts.ANIMATION_TIMEOUT });
 
       // Wait for the table and the service to appear
-      cy.get(".page-body-content table")
+      cy.get(".page-body-content .service-table")
         .contains(serviceName, { timeout: Timeouts.SERVICE_DEPLOYMENT_TIMEOUT })
         .should("exist")
         .as("serviceName");
 
-      cy.get("@serviceName")
-        .parents("tr")
-        .first()
+      cy.get(".filter-input-text").type(serviceName);
+      cy.get(".form-control-group-add-on")
+        .eq(-1)
+        .click(); // close filter window
+      cy.get(".ReactVirtualized__Grid")
+        .eq(-1) // bottom right grid
         .contains("Running", { timeout: Timeouts.SERVICE_DEPLOYMENT_TIMEOUT })
         .should("exist");
+      cy.get(".filter-input-text").clear();
+      cy.get(".form-control-group-add-on")
+      .eq(-1)
+      .click(); // close filter window
 
       // Now click on the name
-      cy.get(".page-body-content table")
-        .getTableRowThatContains(serviceName)
+      cy.get(
+        ".BottomLeftGrid_ScrollWrapper .ReactVirtualized__Grid__innerScrollContainer"
+      )
+        .children()
+        .contains(serviceName)
         .get("a.table-cell-link-primary")
         .contains(serviceName)
         .click();
@@ -1097,18 +1164,29 @@ describe("Services", function() {
         .click({ timeout: Timeouts.ANIMATION_TIMEOUT });
 
       // Wait for the table and the service to appear
-      cy.get(".page-body-content table")
+      cy.get(".page-body-content .service-table")
         .contains(serviceName, { timeout: Timeouts.SERVICE_DEPLOYMENT_TIMEOUT })
         .should("exist");
 
       // Get the table row and wait until it's Running
-      cy.get(".page-body-content table")
-        .getTableRowThatContains(serviceName)
+      cy.get(".filter-input-text").type(serviceName);
+      cy.get(".form-control-group-add-on")
+        .eq(-1)
+        .click(); // close filter window
+      cy.get(".ReactVirtualized__Grid")
+        .eq(-1) // bottom right grid
         .should("exist");
+      cy.get(".filter-input-text").clear();
+      cy.get(".form-control-group-add-on")
+      .eq(-1)
+      .click(); // close filter window
 
       // Now click on the name
-      cy.get(".page-body-content table")
-        .getTableRowThatContains(serviceName)
+      cy.get(
+        ".BottomLeftGrid_ScrollWrapper .ReactVirtualized__Grid__innerScrollContainer"
+      )
+        .children()
+        .contains(serviceName)
         .get("a.table-cell-link-primary")
         .contains(serviceName)
         .click();
@@ -1215,26 +1293,43 @@ describe("Services", function() {
         .click({ timeout: Timeouts.ANIMATION_TIMEOUT });
 
       // Wait for the table and the service to appear
-      cy.get(".page-body-content table")
+      cy.get(".page-body-content .service-table")
         .contains(serviceName, { timeout: Timeouts.SERVICE_DEPLOYMENT_TIMEOUT })
         .should("exist");
 
       // Get the table row and wait until it's Running
-      cy.get(".page-body-content table")
-        .getTableRowThatContains(serviceName)
-        .contains("Running", { timeout: Timeouts.SERVICE_DEPLOYMENT_TIMEOUT })
+      cy.get(".filter-input-text").type(serviceName);
+      cy.get(".form-control-group-add-on")
+        .eq(-1)
+        .click(); // close filter window
+      cy.get(".ReactVirtualized__Grid")
+        .eq(-1) // bottom right grid
         .should("exist")
         .as("serviceName");
+      cy.get(".filter-input-text").clear();
+      cy.get(".form-control-group-add-on")
+      .eq(-1)
+      .click(); // close filter window
 
-      cy.get("@serviceName")
-        .parents("tr")
-        .first()
+      cy.get(".filter-input-text").type(serviceName);
+      cy.get(".form-control-group-add-on")
+        .eq(-1)
+        .click(); // close filter window
+      cy.get(".ReactVirtualized__Grid")
+        .eq(-1) // bottom right grid
         .contains("Running", { timeout: Timeouts.SERVICE_DEPLOYMENT_TIMEOUT })
         .should("exist");
+      cy.get(".filter-input-text").clear();
+      cy.get(".form-control-group-add-on")
+      .eq(-1)
+      .click(); // close filter window
 
       // Now click on the name
-      cy.get(".page-body-content table")
-        .getTableRowThatContains(serviceName)
+      cy.get(
+        ".BottomLeftGrid_ScrollWrapper .ReactVirtualized__Grid__innerScrollContainer"
+      )
+        .children()
+        .contains(serviceName)
         .get("a.table-cell-link-primary")
         .contains(serviceName)
         .click();
@@ -1336,12 +1431,15 @@ describe("Services", function() {
         .contains("Run Service")
         .click({ timeout: Timeouts.ANIMATION_TIMEOUT });
 
-      cy.get(".page-body-content table")
+      cy.get(".page-body-content .service-table")
         .contains(serviceName, { timeout: Timeouts.SERVICE_DEPLOYMENT_TIMEOUT })
         .should("exist");
 
-      cy.get(".page-body-content table")
-        .getTableRowThatContains(serviceName)
+      cy.get(
+        ".BottomLeftGrid_ScrollWrapper .ReactVirtualized__Grid__innerScrollContainer"
+      )
+        .children()
+        .contains(serviceName)
         .should("exist");
     });
 
@@ -1417,12 +1515,15 @@ describe("Services", function() {
         .contains("Run Service")
         .click({ timeout: Timeouts.ANIMATION_TIMEOUT });
 
-      cy.get(".page-body-content table")
+      cy.get(".page-body-content .service-table")
         .contains(serviceName)
         .should("exist");
 
-      cy.get(".page-body-content table")
-        .getTableRowThatContains(serviceName)
+      cy.get(
+        ".BottomLeftGrid_ScrollWrapper .ReactVirtualized__Grid__innerScrollContainer"
+      )
+        .children()
+        .contains(serviceName)
         .should("exist");
     });
   });
