@@ -13,3 +13,7 @@ export const UIMetadataSchema = `
     serverBuild: String
   }
 `;
+
+export const DEFAULT_UI_METADATA: UIMetadata = {
+  clientBuild: window.DCOS_UI_VERSION
+};
