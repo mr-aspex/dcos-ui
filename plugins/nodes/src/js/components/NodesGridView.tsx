@@ -10,6 +10,12 @@ import NodesGridDials from "./NodesGridDials";
 const MAX_SERVICES_TO_SHOW = 32;
 const OTHER_SERVICES_COLOR = 32;
 
+interface Service {
+  id: string;
+  name: string;
+  getId(): string;
+}
+
 interface NodesGridViewProps {
   hasLoadingError?: boolean;
   hiddenServices?: string[];
@@ -19,7 +25,7 @@ interface NodesGridViewProps {
   resourcesByFramework: ResourcesByFramework;
   selectedResource: string;
   serviceColors: ServiceColors;
-  services: object[]; // TODO TS: Framework[] `plugins/services/src/js/structs/Framework.js`
+  services: Service[]; // TODO TS: Framework[] `plugins/services/src/js/structs/Framework.js`
 }
 
 export default class NodesGridView extends React.PureComponent<
@@ -110,7 +116,7 @@ export default class NodesGridView extends React.PureComponent<
         <div className={classSet}>{this.getServicesList()}</div>
 
         <NodesGridDials
-          hosts={hosts.getItems()}
+          hosts={(hosts as any).getItems()}
           resourcesByFramework={resourcesByFramework}
           selectedResource={selectedResource}
           serviceColors={serviceColors}
