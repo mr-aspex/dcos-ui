@@ -124,7 +124,7 @@ const DateUtil = {
   },
 
   strToMs(str: string | null): number | null {
-    if (str == null) {
+    if (str === null) {
       return null;
     }
 
