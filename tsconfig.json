@@ -24,6 +24,13 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "baseUrl": "./",
+
+    // we trust .d.ts-files blindly, mostly because the mocha shipped by cypress
+    // conflicts with jest otherwise. an alternative approach would be to whitelist
+    // @types per `"types": ["jest", "graphql", ...],`, but as this introduces a
+    // high chance of forgetting to add new libs here, we stick with skipLibCheck.
+    "skipLibCheck": true,
+
     "paths": {
       "@dcos/http-service": ["src/typings/dcos__http-service"],
       "*": ["*", "packages/*", "src/typings/*"],
