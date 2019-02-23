@@ -50,7 +50,11 @@ module.exports = {
     proxy: require("./proxy.dev.js")
   },
   plugins: [
-    new ForkTsCheckerWebpackPlugin(),
+    new ForkTsCheckerWebpackPlugin({
+      async: false,
+      checkSyntacticErrors: true,
+      useTypescriptIncrementalApi: true
+    }),
     new DefinePlugin({
       "process.env.LATER_COV": false
     }),
@@ -81,16 +85,12 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           {
-            loader: "thread-loader"
-          },
-          {
             loader: "babel-loader"
           },
           {
             loader: "ts-loader",
             options: {
-              transpileOnly: true,
-              happyPackMode: true
+              transpileOnly: true
             }
           }
         ]
